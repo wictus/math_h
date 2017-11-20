@@ -1,6 +1,11 @@
 Header files with mathematical template functions and classes (C++17)
 ====================================================================
 
+The library is distributed under LGPL v.3 license.
+
+    Question of how LGPL v.3 deals with c++ templates is explained here:
+    http://eigen.tuxfamily.org/index.php?title=Licensing_FAQ&oldid=1117
+    That's a page of C++ library that also contains templates
 
 
 
@@ -22,23 +27,23 @@ Then commit your changes
 CMake Options
 =============
 
-	tests
-if ON the tests are compiled
+Option that turns on unit tests compiletion
 
-Header files
-============
+	tests
+
+Header files (that are used)
+============================
 
 	include/math_h/*.h
 	include/*.h
 
-Contain template classes and can be included in your project
 
 Examples
 ========
-	Examples/*.cpp
-Simple programs that show how to use this template classes
 
-Tests
-=====
+	Examples/*.cpp
+
+Unit tests (require GoogleTest framework)
+=========================================
+
 	tests/*.cpp
-The unit tests (require GoogleTest framework to be installed)

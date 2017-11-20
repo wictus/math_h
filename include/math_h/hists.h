@@ -1,5 +1,5 @@
 // this file is distributed under
-// MIT license
+// LGPLv3 license
 #ifndef ____HISTS_H_____
 #	define ____HISTS_H_____
 #if __cplusplus<201100L
@@ -10,6 +10,24 @@
 #include "error.h"
 namespace MathTemplates
 {
+template<class numt>
+const Chain<value<numt>> BinsByStep(const numt from, const numt step, const numt to)
+{
+    if (0 >= step)throw Exception<Chain<value<numt>>>("wrong bin width");
+    if (to <= from)throw Exception<Chain<value<numt>>>("wrong range");
+    numt delta = step / numt(2);
+    Chain<value<numt>> res;
+    for (numt x = from + delta; x < to; x += step)
+        res.push_back(value<numt>(x, delta));
+    return res;
+}
+template<class numt>
+const Chain<value<numt>> BinsByCount(const size_t count, const numt from, const numt to)
+{
+    if (0 == count)throw Exception<Chain<value<numt>>>("wrong bins count");
+    return BinsByStep(from, (to - from) / numt(count), to);
+}
+
 template<class numtX = double, class numtY = numtX>
 class hist: public SortedPoints<value<numtX>, value<numtY>>
 {
@@ -217,23 +235,5 @@ public:
         return counter;
     }
 };
-
-template<class numt>
-const SortedChain<value<numt>> BinsByStep(const numt from, const numt step, const numt to)
-{
-    if (0 >= step)throw Exception<SortedChain<value<numt>>>("wrong bin width");
-    if (to <= from)throw Exception<SortedChain<value<numt>>>("wrong range");
-    numt delta = step / numt(2);
-    SortedChain<value<numt>> res;
-    for (numt x = from + delta; x < to; x += step)
-        res << value<numt>(x, delta);
-    return res;
-}
-template<class numt>
-const SortedChain<value<numt>> BinsByCount(const size_t count, const numt from, const numt to)
-{
-    if (0 == count)throw Exception<SortedChain<value<numt>>>("wrong bins count");
-    return BinsByStep(from, (to - from) / numt(count), to);
-}
 };
 #endif

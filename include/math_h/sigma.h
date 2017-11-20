@@ -1,5 +1,5 @@
 // this file is distributed under
-// MIT license
+// LGPLv3 license
 #ifndef YJIOGPKSIIYJVKND
 #define YJIOGPKSIIYJVKND
 #if __cplusplus<201100L
@@ -7,10 +7,9 @@
 #endif
 #include <iostream>
 #include <memory>
-#include <list>
 #include <math.h>
-#include "chains.h"
 #include "error.h"
+#include "tabledata.h"
 namespace MathTemplates
 {
 template<typename numt = double>
@@ -60,6 +59,12 @@ public:
     {
         invalidate();
     }
+    value(const std::function<numt(const numt&)>F,const value&source)
+    :Value(F(source.val())),Error(sqrt((pow(F(source.min()) - Value, 2) + pow(F(source.max()) - Value, 2)) / numt(2)))
+    {
+	invalidate();
+    }
+
     value(const std::initializer_list<numt> &source)
     {
         if (source.size() == 0)
@@ -86,7 +91,7 @@ public:
         return value((b + a) / numt(2), (b - a) / numt(2));
     }
     template<class numt2>
-    value(const value &source): Value(source.val()), Error(source.uncertainty())
+    value(const value<numt2> &source): Value(source.val()), Error(source.uncertainty())
     {
         invalidate();
     }
@@ -240,13 +245,6 @@ public:
     inline const value operator/(const value&&other)const
     {
         return value(*this) /= other;
-    }
-    inline const value Func(const std::function<numt(const numt &)>F)const
-    {
-        numt V = F(val());
-        return value(V, sqrt(
-                         (pow(F(min()) - V, 2) + pow(F(max()) - V, 2)) / numt(2)
-                     ));
     }
 };
 template<class numt>

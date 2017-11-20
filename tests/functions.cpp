@@ -1,5 +1,5 @@
 // this file is distributed under
-// MIT license
+// LGPLv3 license
 #include <gtest/gtest.h>
 #include <math_h/functions.h>
 #include <math_h/integrate.h>

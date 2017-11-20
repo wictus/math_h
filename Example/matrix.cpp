@@ -1,5 +1,3 @@
-// this file is distributed under
-// MIT license
 #include <math_h/matrices.h>
 using namespace std;
 using namespace MathTemplates;
@@ -8,13 +6,16 @@ using namespace MathTemplates;
 // and x is an unknown vector
 int main()
 {
-    const MatrixData<double> A({
+    const MatrixData<> A({
         { 1., 2., 0. },
         { 3., 4., 4. },
         { 5., 6., 3. }
     }),
     b({{3}, {7}, {8}});
-    const MatrixData<double> x = Solve(A, b);
+    //Solving linear equation
+    const auto x = Solve(A, b);
     cout << A << endl << x << endl << b << endl;
+    //Calculating determinant
+    cout << "det(A) = "<<Determinant(A);
     return 0;
 }

@@ -1,5 +1,5 @@
 // this file is distributed under
-// MIT license
+// LGPLv3 license
 #ifndef ___________VECTORS_H_____
 #	define ___________VECTORS_H_____
 #if __cplusplus<201100L
@@ -9,8 +9,6 @@
 #include <math.h>
 #include <type_traits>
 #include "error.h"
-#include "chains.h"
-#include "functions.h"
 #include "randomfunc.h"
 #if __cplusplus>201700L
 #define ____optimized_version_of_vectors_h_____
@@ -1075,16 +1073,10 @@ private:
 public:
     virtual ~LorentzVector() {}
     inline LorentzVector(const numt &t, const Space &S): m_time(t), m_space(S) {}
-    inline const TimeCoordinateType &T()const
-    {
-        return m_time;
-    }
-    inline const SpaceVectorType &S()const
-    {
-        return m_space;
-    }
+    inline const TimeCoordinateType &E()const{return m_time;}
+    inline const SpaceVectorType &P()const{return m_space;}
     template<class numt2, class Space2>
-    inline LorentzVector(const LorentzVector<numt2, Space2> &source): m_time(source.T()), m_space(source.S()) {}
+    inline LorentzVector(const LorentzVector<numt2, Space2> &source): m_time(source.E()), m_space(source.P()) {}
     LorentzVector &operator=(const LorentzVector &source)
     {
         m_space = source.m_space;
@@ -1127,6 +1119,10 @@ public:
     {
         return sqrt(M_sqr());
     }
+    inline const numt Ekin()const
+    {
+	return E()-M();
+    }
 
     inline static const LorentzVector zero()
     {
@@ -1135,7 +1131,7 @@ public:
     template<class...Args>
     inline const LorentzVector Rotate(Args...args)const
     {
-        return LorentzVector(T(), MathTemplates::Rotation(args...) * S());
+        return LorentzVector(E(), MathTemplates::Rotation(args...) * P());
     }
     const LorentzVector Transform(const Space &Beta)const
     {
@@ -1146,11 +1142,11 @@ public:
         const numt gamma = numt(1) / sqrt(numt(1) - beta * beta);
         const auto ST = ONE<Space::Dimensions>() + TensorProduct(bn, bn) * (gamma - numt(1));
         const auto TT = -Beta * gamma;
-        return LorentzVector((T() * gamma) + (S() * TT), (ST * S()) + (TT * T()));
+        return LorentzVector((E() * gamma) + (P() * TT), (ST * P()) + (TT * E()));
     }
     const Space Beta()const
     {
-        return S() / T();
+        return P() / E();
     }
 };
 template<class numt = double, class Space = Vector<3, numt>>
@@ -1173,6 +1169,16 @@ template<class numt = double, class Space = Vector<3, numt>>
 inline const LorentzVector<numt, Space> lorentz_byEM(const numt &t, const numt &l4, const Space &Dir)
 {
     return lorentz_byEM(t, l4, direction(Dir));
+}
+template<class numt = double, class Space = Vector<3, numt>>
+inline const LorentzVector<numt, Space> lorentz_byEkM(const numt &e, const numt &l4, const typename Space::DType &dir)
+{
+    return lorentz_byEM(e+l4, l4, dir);
+}
+template<class numt = double, class Space = Vector<3, numt>>
+inline const LorentzVector<numt, Space> lorentz_byEkM(const numt &e, const numt &l4, const Space &Dir)
+{
+    return lorentz_byEM(e+l4, l4, direction(Dir));
 }
 template<size_t size, class numt>
 const std::pair<LorentzVector<numt, Vector<size, numt>>, LorentzVector<numt, Vector<size, numt>>>

@@ -1,5 +1,5 @@
 // this file is distributed under
-// MIT license
+// LGPLv3 license
 #ifndef PPRNSANGJGXVGERD
 #define PPRNSANGJGXVGERD
 #if __cplusplus<201100L
@@ -7,7 +7,6 @@
 #endif
 #include "functions.h"
 #include "integrate.h"
-#include "tabledata.h"
 namespace MathTemplates
 {
 template<class numX = double, class numY = numX>

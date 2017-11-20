@@ -1,5 +1,5 @@
 // this file is distributed under
-// MIT license
+// LGPLv3 license
 #include <random>
 #include <math.h>
 #include <gtest/gtest.h>
@@ -199,10 +199,8 @@ TEST(value, NumCompare)
 }
 TEST(value, func_val)
 {
-    value<double> V(1, 0.1);
-    auto V2 = V.Func([](double x) {
-        return 2.0 * x;
-    });
+    value<> V(1, 0.1),
+    V2([](double x)->double{return 2.0 * x;},V);
     EXPECT_EQ(2 * V.val(), V2.val());
     _EQ(2 * V.uncertainty(), V2.uncertainty());
 }

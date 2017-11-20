@@ -1,13 +1,13 @@
 // this file is distributed under
-// MIT license
+// LGPLv3 license
 #ifndef GRIVHOWXKUEHYGQF
 #	define GRIVHOWXKUEHYGQF
 #if __cplusplus<201100L
 #error c++>=11 is needed for using math_h headers
 #endif
+#include "error.h"
 #include "functions.h"
 #include "tabledata.h"
-#include "error.h"
 namespace MathTemplates
 {
 template<class numX, class numY = numX, class functype = std::function<numY(numX)>>

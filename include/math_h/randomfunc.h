@@ -1,5 +1,5 @@
 // this file is distributed under
-// MIT license
+// LGPLv3 license
 #ifndef XRYPRAVJWTJCYPQI
 #define XRYPRAVJWTJCYPQI
 #if __cplusplus<201100L
@@ -9,7 +9,6 @@
 #include <memory>
 #include "functions.h"
 #include "interpolate.h"
-#include "integrate.h"
 namespace MathTemplates
 {
 typedef std::mt19937 RANDOM;

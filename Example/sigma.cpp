@@ -1,5 +1,3 @@
-// this file is distributed under
-// MIT license
 #include <iostream>
 #include <math_h/sigma.h>
 using namespace std;
@@ -16,12 +14,16 @@ int main()
     cout<<"A: epsilon = "<<A.epsilon()<<endl;
     cout<<"A: min = "<<A.min()<<endl;
     cout<<"A: max = "<<A.max()<<endl;
+    cout<<"B: value = "<<B.val()<<endl;
+    cout<<"B: delta = "<<B.uncertainty()<<endl;
+    cout<<"B: epsilon = "<<B.epsilon()<<endl;
+    cout<<"B: min = "<<B.min()<<endl;
+    cout<<"B: max = "<<B.max()<<endl;
     //how to perform arithmetic operations
-    cout<<"A = "<<A<<endl;
-    cout<<"B = "<<B<<endl;
     cout<<"A+B = "<<A+B<<endl;
     cout<<"A-B = "<<A-B<<endl;
     cout<<"A*B = "<<A*B<<endl;
     cout<<"A/B = "<<A/B<<endl;
-    cout<<"log(A) = "<<A.Func([](double x){return log(x);})<<endl;
+    const auto func=[](double x)->double{return log(x);};
+    cout<<"log(A) = "<< value<>(func,A) <<endl;
 }
